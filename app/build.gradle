@@ -35,6 +35,10 @@ dependencies {
     // Loading images
     compile 'com.squareup.picasso:picasso:2.5.2'
 
+    // ButterKnife
+    compile 'com.jakewharton:butterknife:8.5.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+
     // Tests
     testCompile 'junit:junit:4.12'
 }

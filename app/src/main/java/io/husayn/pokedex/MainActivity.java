@@ -27,6 +27,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.husayn.pokedex.adapter.PokemonAdapter;
 import io.husayn.pokedex.model.Pokemon;
 
@@ -54,11 +56,11 @@ public class MainActivity extends AppCompatActivity {
     private final String POKEMON_URL = "url";
     private final String POKEMON_NAME = "name";
 
-    private RecyclerView mPokemonRecyclerView;
+    @BindView(R.id.pokemon_recycler_view) private RecyclerView mPokemonRecyclerView;
     private StaggeredGridLayoutManager mLayoutManager;
     private PokemonAdapter mPokemonAdapter;
 
-    private TextView mLoadingTextView;
+    @BindView(R.id.loading) private TextView mLoadingTextView;
 
     private Cache mCache;
     private Network mNetwork;
@@ -78,9 +80,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mLoadingTextView = (TextView) findViewById(R.id.loading);
-        mPokemonRecyclerView = (RecyclerView) findViewById(R.id.pokemon_recycler_view);
+        ButterKnife.bind(this);
 
         // Setting the layout manager and animator for the recycler view
         mLayoutManager = new StaggeredGridLayoutManager(3, GridLayoutManager.VERTICAL);
