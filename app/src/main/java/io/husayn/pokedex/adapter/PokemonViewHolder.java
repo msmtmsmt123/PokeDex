@@ -8,9 +8,6 @@ import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
-import io.husayn.pokedex.MainActivity;
 import io.husayn.pokedex.R;
 
 /**
@@ -20,8 +17,9 @@ import io.husayn.pokedex.R;
 public class PokemonViewHolder extends RecyclerView.ViewHolder {
 
     private Context mContext;
-    @BindView(R.id.pokemon_sprite) private ImageView mPokemonSprite;
-    @BindView(R.id.pokemon_name)private TextView mPokemonName;
+
+    private ImageView mPokemonSprite;
+    private TextView mPokemonName;
 
     public PokemonViewHolder(Context context, View itemView) {
         super(itemView);
@@ -29,7 +27,8 @@ public class PokemonViewHolder extends RecyclerView.ViewHolder {
         // Set the context
         mContext = context;
 
-        ButterKnife.bind((MainActivity) mContext);
+        mPokemonSprite = (ImageView) itemView.findViewById(R.id.pokemon_sprite);
+        mPokemonName = (TextView) itemView.findViewById(R.id.pokemon_name);
     }
 
     /**

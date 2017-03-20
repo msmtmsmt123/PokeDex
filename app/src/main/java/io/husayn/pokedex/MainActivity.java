@@ -5,8 +5,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SearchView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -27,8 +30,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import io.husayn.pokedex.adapter.PokemonAdapter;
 import io.husayn.pokedex.model.Pokemon;
 
@@ -36,7 +37,7 @@ import io.husayn.pokedex.model.Pokemon;
  * Created by husaynhakeem on 3/12/17.
  */
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements SearchView.OnQueryTextListener {
 
     private static final String TAG = MainActivity.class.getSimpleName();
 
@@ -56,11 +57,11 @@ public class MainActivity extends AppCompatActivity {
     private final String POKEMON_URL = "url";
     private final String POKEMON_NAME = "name";
 
-    @BindView(R.id.pokemon_recycler_view) private RecyclerView mPokemonRecyclerView;
+    private RecyclerView mPokemonRecyclerView;
     private StaggeredGridLayoutManager mLayoutManager;
     private PokemonAdapter mPokemonAdapter;
 
-    @BindView(R.id.loading) private TextView mLoadingTextView;
+    private TextView mLoadingTextView;
 
     private Cache mCache;
     private Network mNetwork;
@@ -80,7 +81,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        ButterKnife.bind(this);
+
+        mPokemonRecyclerView = (RecyclerView) findViewById(R.id.pokemon_recycler_view);
+        mLoadingTextView = (TextView) findViewById(R.id.loading);
 
         // Setting the layout manager and animator for the recycler view
         mLayoutManager = new StaggeredGridLayoutManager(3, GridLayoutManager.VERTICAL);
@@ -166,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.e(TAG, error.getMessage());
+                        Log.e(TAG, "" + error.getMessage());
                         displayLoadingMessage(false);
                         if (sCurrentOffset > 0)
                             sCurrentOffset -= mPokemonCountPerRequest;
@@ -239,5 +242,31 @@ public class MainActivity extends AppCompatActivity {
      */
     private void displayLoadingMessage(boolean toDisplay) {
         mLoadingTextView.setVisibility(toDisplay ? View.VISIBLE : View.GONE);
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.main_menu, menu);
+
+//        SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+
+//        MenuItem searchMenuItem = menu.findItem(R.id.search_item);
+//        SearchView searchView = (SearchView) searchMenuItem.getActionView();
+//        searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
+//        searchView.setSubmitButtonEnabled(true);
+//        searchView.setOnQueryTextListener(this);
+
+        return true;
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) {
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+        return false;
     }
 }
